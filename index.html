@@ -78,6 +78,46 @@
         -webkit-backdrop-filter: blur(12px);
         border: 1px solid rgba(255, 255, 255, 0.5);
       }
+      
+      /* Initial Loader */
+      #loader {
+        position: fixed;
+        inset: 0;
+        background: #FDFAF7;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.5s ease-out;
+      }
+      .loader-content {
+        text-align: center;
+      }
+      .loader-logo {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 2rem;
+        font-style: italic;
+        color: #44403C;
+        margin-bottom: 1rem;
+        animation: pulse 2s infinite;
+      }
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border: 2px solid #FFF0F0;
+        border-top: 2px solid #D4A5A5;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+      }
     </style>
   <script type="importmap">
 {
@@ -86,12 +126,30 @@
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
     "react/": "https://esm.sh/react@^19.2.4/",
     "@google/genai": "https://esm.sh/@google/genai@^1.38.0",
-    "lucide-react": "https://esm.sh/lucide-react@^0.563.0"
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
   }
 }
 </script>
 </head>
   <body>
+    <div id="loader">
+      <div class="loader-content">
+        <div class="loader-logo">Pâte & Fondant</div>
+        <div class="spinner"></div>
+      </div>
+    </div>
     <div id="root"></div>
+    <script>
+      window.onload = () => {
+        const loader = document.getElementById('loader');
+        if(loader) {
+          loader.style.opacity = '0';
+          setTimeout(() => loader.remove(), 500);
+        }
+      }
+    </script>
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>
